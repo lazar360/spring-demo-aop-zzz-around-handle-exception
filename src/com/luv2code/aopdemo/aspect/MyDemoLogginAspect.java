@@ -33,18 +33,33 @@ public class MyDemoLogginAspect {
 		
 		// now, let's execute themethod
 		Object result = null;
-				
+		
+		// Option 1 : traitement de l'exception 
+//		try {
+//			result = theProceedingJoinPoint.proceed();
+//		} catch (Exception e) {
+//			// log the exception 
+//			myLogger.warning(e.getMessage());
+//			
+//			// give user a custom message
+//			result = "Major accident ! But no worries, "
+//					+ "your private AOP helicopter is on the way !";
+//			
+//		}
+		
+		// Option 2 : transmettre l'exception 
 		try {
 			result = theProceedingJoinPoint.proceed();
 		} catch (Exception e) {
 			// log the exception 
 			myLogger.warning(e.getMessage());
 			
-			// give user a custom message
-			result = "Major accident ! But no worries, "
-					+ "your private AOP helicopter is on the way !";
+			// rethrow an exception
+			throw e;
+			
 			
 		}
+
 		
 		// get end timestamp
 		long end = System.currentTimeMillis();
